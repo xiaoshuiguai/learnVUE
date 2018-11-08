@@ -1,15 +1,27 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <h1>{{ msgfromfather }}</h1>
+    <button @click="clickme">Click</button>
+    <button @click="clickme2">Click</button>
   </div>
 </template>
 
 <script>
 export default {
   name: 'HelloWorld',
-  data () {
+  data :function() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: this.msgfromfather
+    }
+  },
+  props:['msgfromfather'],
+  methods:{
+    clickme:function(){
+      alert(this.msgfromfather);
+    },
+    clickme2:function(){
+      this.$emit("childrentell",this.msg);
     }
   }
 }

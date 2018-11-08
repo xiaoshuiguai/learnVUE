@@ -8,27 +8,40 @@
         {{item.label}}
       </li>
     </ul>
+    <p>child say {{childrentell}}</p>
     <HelloWorld/>
+    <componentA msgfromfather='father' @childrentell="listentomyson"/>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld'
-
+import Store from './store';
+import componentA from './components/componentA'
+console.log(Store);
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,componentA
   },
+
   data:function(){
     return {
        title: '<span>2018-11-5：</span>TODOList',
-       items:[
-        
-       ],
+       items:Store.fetch(),
        liclass:'thisisliclass',
-       newItem:''
+       newItem:'',
+       childrentell:''
     }
+  },
+
+  watch:{
+     items: {
+      handler: function (items) { 
+        Store.save(items);
+      },
+      deep: true
+    },
   },
   methods:{
     aaaaa:function(a){
@@ -42,6 +55,10 @@ export default {
         isFinished:false
       })
       this.newItem = '';
+    },
+    listentomyson:function(msg){
+      // alert();
+      this.childrentell = msg;
     }
   }
 }
